@@ -1,0 +1,57 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "bourbon"
+@import "neat"
+
+.disabled, [disabled]
+  opacity: 0.5
+
+.disablable
+  width: 48px
+  height: 48px
+  display: inline-block
+  margin: 10px
+  border: 1px solid #ccc
+  border-radius: 6px
+
+.content
+  @include span-columns(9)
+
+.sidebar
+  padding-right: 30px
+  padding-bottom: 30px
+  @include span-columns(3)
+
+input[type=submit]
+  height: 40px
+  padding: 10px
+  border: 1px solid #CCC
+  border-radius: 5px
+  background: #9C0
+  color: white
+
+  &:focus, &:hover
+    background: #CF0
+    color: #333
+
+  &:active
+    background: #CF3
+
+.small-color
+  display: inline-block
+  width: 25px
+  height: 25px
+  border: 1px solid #ccc
+  border-radius: 6px
+  + span
+    display: inline-block
+    width: 20px
+
+.no-wrap
+  white-space: nowrap
+
+table
+  width: 100%
+  font-size: 13px

@@ -1,0 +1,102 @@
+<div class='content'>
+  <script type="text/javascript">
+    window.playlist = <%== @playlist.to_json %>
+  </script>
+
+  <% if @playlist.any? %>
+    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+    <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+      <div class="jp-type-playlist">
+        <div class="jp-gui jp-interface">
+          <div class="jp-controls">
+            <button class="jp-previous" role="button" tabindex="0">previous</button>
+            <button class="jp-play" role="button" tabindex="0">play</button>
+            <button class="jp-next" role="button" tabindex="0">next</button>
+            <button class="jp-stop" role="button" tabindex="0">stop</button>
+          </div>
+          <div class="jp-progress">
+            <div class="jp-seek-bar">
+              <div class="jp-play-bar"></div>
+            </div>
+          </div>
+          <div class="jp-volume-controls">
+            <button class="jp-mute" role="button" tabindex="0">mute</button>
+            <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+            <div class="jp-volume-bar">
+              <div class="jp-volume-bar-value"></div>
+            </div>
+          </div>
+          <div class="jp-time-holder">
+            <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+            <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+          </div>
+          <div class="jp-toggles">
+            <button class="jp-repeat" role="button" tabindex="0">repeat</button>
+            <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
+          </div>
+        </div>
+        <div class="jp-playlist">
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+        </div>
+        <div class="jp-no-solution">
+          <span>Update Required</span>
+          To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+        </div>
+      </div>
+    </div>
+    <br>
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>BPM</th>
+        <th>Energy</th>
+        <th>Colors</th>
+      </tr>
+      <% @playlist.each do |track| %>
+        <tr>
+          <td><%= track[:title] %></td>
+          <td><%= number_to_currency track[:bpm], unit: '' %></td>
+          <td><%= number_to_currency track[:energy], unit: '' %></td>
+          <td style='min-width: 500px '>
+            <% sort_colors(track[:colors]).each do |color, value|%>
+              <span class='no-wrap'><div class='small-color' style='background-color:<%=color%>'></div>&nbsp;<span> <%= value.to_i %></span></span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    Params are too inconsistent
+  <% end %>
+</div>
+
+<div class='sidebar'>
+  <form method="get">
+    <label class='disablable <%= params[:bpm] ? '' : 'disabled' %>' for='bpm'><%= image_tag 'bpm.png', width: 48 %></label>
+    <span class='counter-for-bpm'><%= params[:bpm].try(:[], :from) || 0 %> - <%= params[:bpm].try(:[], :to) || 0 %></span>
+    <%= hidden_field_tag "bpm[from]", params[:bpm].try(:[], :from) || 0 %>
+    <%= hidden_field_tag "bpm[to]", params[:bpm].try(:[], :to) || 0 %>
+    <div class="slider-range" data-for='bpm', data-min=0 data-max=230></div>
+
+    <label class='disablable <%= params[:energy] ? '' : 'disabled' %>' for='energy'><%= image_tag 'energy.png', width: 48 %></label>
+    <span class='counter-for-energy'><%= params[:energy].try(:[], :from) || 0 %> - <%= params[:energy].try(:[], :to) || 0 %></span>
+    <%= hidden_field_tag "energy[from]", params[:energy].try(:[], :from) || 0 %>
+    <%= hidden_field_tag "energy[to]", params[:energy].try(:[], :to) || 0 %>
+    <div class="slider-range" data-for='energy', data-min=0 data-max=183></div>
+
+    <% HomeHelper::SORTED_COLORS.each do |color, p| %>
+      <label class='disablable <%= params[:colors].try(:[], color) ? '' : 'disabled' %>' for='colors[<%= color %>]' style='background-color:<%= color %>'>
+      </label>
+      <span class="counter-for-colors_<%=color%>_"><%= params[:colors].try(:[], color).try(:[], :from) || 0 %> - <%= params[:colors].try(:[], color).try(:[], :to) || 0 %></span>
+      <%= hidden_field_tag "colors[#{color}][from]", params[:colors].try(:[], color).try(:[], :from) || 0 %>
+      <%= hidden_field_tag "colors[#{color}][to]", params[:colors].try(:[], color).try(:[], :to) || 0 %>
+      <div class="slider-range" data-for='colors[<%=color%>]', data-min=0 data-max=50></div>
+    <% end %>
+  <br>
+  <br>
+
+    <input type=submit value="Get playlist!">
+  </form>
+</div>
