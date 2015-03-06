@@ -74,25 +74,31 @@
 
 <div class='sidebar'>
   <form method="get">
-    <label class='disablable <%= params[:bpm] ? '' : 'disabled' %>' for='bpm'><%= image_tag 'bpm.png', width: 48 %></label>
-    <span class='counter-for-bpm'><%= params[:bpm].try(:[], :from) || 0 %> - <%= params[:bpm].try(:[], :to) || 0 %></span>
-    <%= hidden_field_tag "bpm[from]", params[:bpm].try(:[], :from) || 0 %>
-    <%= hidden_field_tag "bpm[to]", params[:bpm].try(:[], :to) || 0 %>
-    <div class="slider-range" data-for='bpm', data-min=0 data-max=230></div>
+    <div class="filter">
+      <label class='disablable <%= params[:bpm] ? '' : 'disabled' %>' for='bpm'><%= image_tag 'bpm.png', width: 48 %></label>
+      <span class='counter-for-bpm'><%= params[:bpm].try(:[], :from) || 0 %> - <%= params[:bpm].try(:[], :to) || 0 %></span>
+      <%= hidden_field_tag "bpm[from]", params[:bpm].try(:[], :from) || 0 %>
+      <%= hidden_field_tag "bpm[to]", params[:bpm].try(:[], :to) || 0 %>
+      <div class="slider-range" data-for='bpm', data-min=0 data-max=230></div>
+    </div>
 
-    <label class='disablable <%= params[:energy] ? '' : 'disabled' %>' for='energy'><%= image_tag 'energy.png', width: 48 %></label>
-    <span class='counter-for-energy'><%= params[:energy].try(:[], :from) || 0 %> - <%= params[:energy].try(:[], :to) || 0 %></span>
-    <%= hidden_field_tag "energy[from]", params[:energy].try(:[], :from) || 0 %>
-    <%= hidden_field_tag "energy[to]", params[:energy].try(:[], :to) || 0 %>
-    <div class="slider-range" data-for='energy', data-min=0 data-max=183></div>
+    <div class="filter">
+      <label class='disablable <%= params[:energy] ? '' : 'disabled' %>' for='energy'><%= image_tag 'energy.png', width: 48 %></label>
+      <span class='counter-for-energy'><%= params[:energy].try(:[], :from) || 0 %> - <%= params[:energy].try(:[], :to) || 0 %></span>
+      <%= hidden_field_tag "energy[from]", params[:energy].try(:[], :from) || 0 %>
+      <%= hidden_field_tag "energy[to]", params[:energy].try(:[], :to) || 0 %>
+      <div class="slider-range" data-for='energy', data-min=0 data-max=183></div>
+    </div>
 
     <% HomeHelper::SORTED_COLORS.each do |color, p| %>
-      <label class='disablable <%= params[:colors].try(:[], color) ? '' : 'disabled' %>' for='colors[<%= color %>]' style='background-color:<%= color %>'>
-      </label>
-      <span class="counter-for-colors_<%=color%>_"><%= params[:colors].try(:[], color).try(:[], :from) || 0 %> - <%= params[:colors].try(:[], color).try(:[], :to) || 0 %></span>
-      <%= hidden_field_tag "colors[#{color}][from]", params[:colors].try(:[], color).try(:[], :from) || 0 %>
-      <%= hidden_field_tag "colors[#{color}][to]", params[:colors].try(:[], color).try(:[], :to) || 0 %>
-      <div class="slider-range" data-for='colors[<%=color%>]', data-min=0 data-max=50></div>
+      <div class="filter">
+        <label class='disablable <%= params[:colors].try(:[], color) ? '' : 'disabled' %>' for='colors[<%= color %>]' style='background-color:<%= color %>'>
+        </label>
+        <span class="counter-for-colors_<%=color%>_"><%= params[:colors].try(:[], color).try(:[], :from) || 0 %> - <%= params[:colors].try(:[], color).try(:[], :to) || 0 %></span>
+        <%= hidden_field_tag "colors[#{color}][from]", params[:colors].try(:[], color).try(:[], :from) || 0 %>
+        <%= hidden_field_tag "colors[#{color}][to]", params[:colors].try(:[], color).try(:[], :to) || 0 %>
+        <div class="slider-range" data-for='colors[<%=color%>]', data-min=0 data-max=50></div>
+    </div>
     <% end %>
   <br>
   <br>

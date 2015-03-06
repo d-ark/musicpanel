@@ -26,8 +26,10 @@ $(document).on 'ready page:load' , ->
       slide: (event, ui) ->
         $(".counter-for-#{this.dataset['for'].replace(/[\[\]]/g, '_')}").text "#{ui.values[ 0 ]} - #{ui.values[ 1 ]}"
         target = event.target.dataset['for']
-        ($ "input[name='#{target}[from]']").val ui.values[ 0 ]
-        ($ "input[name='#{target}[to]']").val ui.values[ 1 ]
+        ($ "input[name='#{target}[from]']").removeAttr('disabled').val ui.values[ 0 ]
+        ($ "input[name='#{target}[to]']").removeAttr('disabled').val ui.values[ 1 ]
+        ($ this).closest('.filter').find('.disablable').removeClass 'disabled'
+
 
 ($ document).on 'click', '.disablable', ->
   $input = $("input[name^='#{this.getAttribute('for')}']")
