@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require jquery-ui/slider
 //= require turbolinks
+//= require three
 //= require_tree .

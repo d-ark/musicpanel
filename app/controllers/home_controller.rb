@@ -17,6 +17,9 @@ class HomeController < ApplicationController
     end
   end
 
+  def cube
+  end
+
   def openapi_params
     params.permit(:q, bpm: [:to, :from], energy: [:to, :from], colors: ALLOWED_COLORS)
   end
